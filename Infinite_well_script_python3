@@ -1,0 +1,46 @@
+#Program to simulate the quantum mechanics 'particle confined to an infinite well' problem.
+#The program displays a diagram of the well akongside the first 3 energy levels and corresponding wavefunctons present.
+#The program uses the matplotlib and numpy libraries.
+#Written in October 2020
+
+#import libraries
+from matplotlib import pyplot as pplt
+import numpy as np
+
+#define constants
+a = 1e-9
+pi = 3.
+qn = [1,2,3]
+b = np.sqrt(2/a)
+
+#create figure and axes, label and title
+fig1 = pplt.figure()
+axes = fig1.add_subplot(1,1,1)
+axes.set_xlim([-1e-9,2e-9])
+axes.set_ylabel("Energy U(x) ---> ∞")
+axes.set_xlabel("Position x (m^-1)")
+pplt.title("Graph of Wave Functions for n = 1,2,3 for Electron in Infinite Well",fontsize = 10)
+axes.tick_params(axis='y', which='both',left=False, right=False, labelleft=False)
+
+#create lines to represent well and to display ebergy of particular qn
+axes.vlines(0,0,12*b,color = 'k')
+axes.vlines(a,0,12*b,color = 'k')
+axes.hlines(0,0,1e-9,color = 'k')
+axes.hlines(b,0,1e-9,color = 'b',label = 'n=1')
+axes.hlines(4*b,0,1e-9,color = 'orange',label = 'n=2')
+axes.hlines(9*b,0,1e-9,color = 'g',label = 'n=3')
+
+#create values of x used in psi calculation
+x_vals = np.linspace(0,a,100)
+
+#calculate wavefunctions and adjust based on qn
+psi_n1 = b + b*np.sin((qn[0]*np.pi*x_vals)/a)
+psi_n2 = 4*b + b*np.sin((qn[1]*np.pi*x_vals)/a)
+psi_n3 = 9*b + b*np.sin((qn[2]*np.pi*x_vals)/a)
+
+#plot psi
+axes.plot(x_vals,psi_n1)
+axes.plot(x_vals,psi_n2)
+axes.plot(x_vals,psi_n3)
+axes.legend(["Ψ(x) n=1", "Ψ(x) n=2", "Ψ(x) n=3"])
+pplt.show()
